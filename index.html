@@ -30,18 +30,18 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #e05a36;
+            background: #36b2e0;
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #ff6347;
+            background: #57c1e8;
         }
 
         /* For Firefox */
         * {
             scrollbar-width: thin;
-            scrollbar-color: #e05a36 transparent;
+            scrollbar-color: #36b2e0 transparent;
         }
 
         /* Navigation */
@@ -81,7 +81,7 @@
         }
 
         nav a:hover {
-            color: #e05a36;
+            color: #36b2e0;
         }
 
         /* Hero Section */
@@ -128,7 +128,7 @@
             font-size: 1.1rem;
             color: #ffffff;
             margin-bottom: 0;
-            background: #e05a36;
+            background: #36b2e0;
             /* Orange color from reference */
             padding: 0.8rem 2rem;
             border-radius: 50px;
@@ -137,6 +137,12 @@
             font-weight: 700;
             display: inline-block;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero p:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         .scroll-arrow {
@@ -167,7 +173,7 @@
             width: 100%;
             height: 100%;
             fill: none;
-            stroke: #e05a36;
+            stroke: #36b2e0;
             stroke-width: 3;
             filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
         }
@@ -206,7 +212,7 @@
             font-size: 2.5rem;
             margin-bottom: 3rem;
             text-align: center;
-            background: linear-gradient(135deg, #e05a36, #ff6347);
+            background: linear-gradient(135deg, #36b2e0, #57c1e8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -231,7 +237,7 @@
             color: #ffffff;
             margin-bottom: 3rem;
             /* More space before grid */
-            background: #e05a36;
+            background: #36b2e0;
             padding: 0.8rem 2rem;
             border-radius: 50px;
             text-transform: uppercase;
@@ -242,6 +248,12 @@
             text-align: center;
             align-self: center;
             /* Since section is flex column */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-subtitle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         /* Clients Carousel Section */
@@ -263,7 +275,7 @@
 
         .clients-section h3 {
             text-align: center;
-            color: #e05a36;
+            color: #36b2e0;
             font-size: 1.1rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -343,7 +355,7 @@
             font-size: 3rem;
             margin-bottom: 1rem;
             text-align: left;
-            background: linear-gradient(135deg, #e05a36, #ff6347);
+            background: linear-gradient(135deg, #36b2e0, #57c1e8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -399,7 +411,7 @@
             /* Inherit base styles from section-subtitle but allow for specific sizing */
             font-size: 1.1rem;
             color: #ffffff;
-            background: #e05a36;
+            background: #36b2e0;
             padding: 0.8rem 2rem;
             border-radius: 50px;
             text-transform: uppercase;
@@ -470,7 +482,7 @@
             left: 50%;
             width: 4px;
             height: 100%;
-            background: #e05a36;
+            background: #36b2e0;
             cursor: ew-resize;
             z-index: 10;
             transform: translateX(-50%);
@@ -484,7 +496,7 @@
             transform: translate(-50%, -50%);
             width: 35px;
             height: 35px;
-            background: #e05a36;
+            background: #36b2e0;
             border-radius: 50%;
         }
 
@@ -509,11 +521,11 @@
 
         .skill-card:hover {
             transform: translateY(-5px);
-            border-color: #e05a36;
+            border-color: #36b2e0;
         }
 
         .skill-card h3 {
-            color: #e05a36;
+            color: #36b2e0;
             margin-bottom: 1rem;
         }
 
@@ -528,7 +540,7 @@
 
         .skill-card li:before {
             content: "▹ ";
-            color: #e05a36;
+            color: #36b2e0;
             font-weight: bold;
         }
 
@@ -555,7 +567,7 @@
         .collage-item:hover {
             transform: scale(1.02);
             z-index: 10;
-            border-color: #e05a36;
+            border-color: #36b2e0;
             /* Thin orange border */
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
             /* Subtle shadow, no glow */
@@ -615,7 +627,7 @@
         }
 
         .lightbox-close:hover {
-            color: #e05a36;
+            color: #36b2e0;
         }
 
         .lightbox-nav {
@@ -648,7 +660,7 @@
             width: 30px;
             height: 30px;
             fill: none;
-            stroke: #e05a36;
+            stroke: #36b2e0;
             stroke-width: 3;
             transition: stroke 0.3s;
             filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
@@ -702,7 +714,7 @@
         .contact-link {
             font-size: 1.1rem;
             color: #ffffff;
-            background: #e05a36;
+            background: #36b2e0;
             padding: 0.8rem 2rem;
             border-radius: 50px;
             text-transform: uppercase;
@@ -759,7 +771,7 @@
         }
 
         .process-pill {
-            background: #e05a36;
+            background: #36b2e0;
             color: #ffffff;
             padding: 0.5rem 2.2rem;
             border-radius: 50px;
@@ -769,6 +781,12 @@
             letter-spacing: 2px;
             display: inline-block;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .process-pill:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
 
         .process-desc {
@@ -794,7 +812,7 @@
             width: 100%;
             height: 100%;
             fill: none !important;
-            stroke: #e05a36 !important;
+            stroke: #36b2e0 !important;
             stroke-width: 3 !important;
             filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
         }
@@ -950,7 +968,7 @@
     <!-- Navigation -->
     <nav>
         <a href="#home" class="logo-link">
-            <img src="NaryunLogo.png" alt="Naryun Logo" class="nav-logo">
+            <img src="NaryunBlue.png" alt="Naryun Logo" class="nav-logo">
         </a>
         <ul>
             <li><a href="#home">Home</a></li>
