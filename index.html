@@ -59,11 +59,6 @@ hr{border:none;border-top:1px solid var(--border)}
 .collage-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
 .collage-item:hover img{transform:scale(1.08)}
 .ctr-badge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.75);color:#4ade80;font-size:11px;font-weight:700;padding:3px 7px;border-radius:4px;border:1px solid rgba(74,222,128,.25);z-index:1}
-.collage-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);opacity:0;transition:opacity .25s ease;display:flex;align-items:center;justify-content:center}
-.collage-item:hover .collage-overlay{opacity:1}
-.collage-overlay-play{width:52px;height:52px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:scale(0.8);transition:transform .25s ease;margin-bottom:12px}
-.collage-item:hover .collage-overlay-play{transform:scale(1)}
-.collage-overlay-play svg{width:20px;height:20px;fill:white;margin-left:3px}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;z-index:2000;inset:0;background:rgba(0,0,0,0.92);justify-content:center;align-items:center;opacity:0;transition:opacity .3s}
@@ -290,8 +285,8 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
 // ═══════════════════════════════════════════════
 // 1. PORTFOLIO — managed by sync_portfolio.py
 // ═══════════════════════════════════════════════
-const portfolioImages = ['AKAI.jpg', 'After.jpg', 'AirfieldRender.png', 'CaveRenderv4.png', 'LEV3.png', 'RainV3.jpg', 'RustRender.png', 'SWGraveV1.jpg', 'SnowBaseRender.jpg', 'swqueenv2.png']; // SYNC_START
-const portfolioCTR = {}; // CTR_SYNC
+const portfolioImages = ['11%RustRender.png', '12%SnowBaseRender.jpg', '12%bativ1.jpg', '13%RainV3.jpg', '13%bativ2.jpg', '15%swgave.jpg', '16%AK.jpg', '18%cave.png', '19%Airfield.png', '19%LEV3.png', '21%swshop.jpg', 'AKAI.jpg', 'After.jpg', 'AirfieldRender.png', 'CaveRenderv4.png', 'LEV3.png', 'RainV3.jpg', 'RustRender.png', 'SWGraveV1.jpg', 'SnowBaseRender.jpg', 'bativ1.jpg', 'bativ2.jpg', 'maxresdefault.jpg', 'swqueenv2.png']; // SYNC_START
+const portfolioCTR = {'11%RustRender.png': '11% CTR', '12%SnowBaseRender.jpg': '12% CTR', '12%bativ1.jpg': '12% CTR', '13%RainV3.jpg': '13% CTR', '13%bativ2.jpg': '13% CTR', '15%swgave.jpg': '15% CTR', '16%AK.jpg': '16% CTR', '18%cave.png': '18% CTR', '19%Airfield.png': '19% CTR', '19%LEV3.png': '19% CTR', '21%swshop.jpg': '21% CTR'}; // CTR_SYNC
 
 function renderPortfolio(){
   const grid = document.getElementById('portfolioGrid');
@@ -301,9 +296,6 @@ function renderPortfolio(){
     <div class="collage-item" onclick="openLightbox(${i})">
       <img src="Portfolio Pieces/${img}" alt="Portfolio piece ${i+1}" loading="lazy">
       ${ctr ? `<span class="ctr-badge">${ctr}</span>` : ''}
-      <div class="collage-overlay">
-        <div class="collage-overlay-play"><svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"/></svg></div>
-      </div>
     </div>`;
   }).join('');
 }
