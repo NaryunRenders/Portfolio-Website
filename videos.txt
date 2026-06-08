@@ -1,3 +1,5 @@
 # Add one YouTube URL per line — titles, creator names and durations are fetched automatically
 # Example:
 # https://www.youtube.com/watch?v=dQw4w9WgXcQ
+https://www.youtube.com/watch?v=9kUc9Vfui90&t
+https://www.youtube.com/watch?v=9uv6RFiMnwo&t
