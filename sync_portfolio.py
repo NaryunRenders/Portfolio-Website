@@ -5,7 +5,7 @@ import urllib.request
 import urllib.parse
 
 # Configuration
-PORTFOLIO_DIR = "Portfolio Pieces"
+PORTFOLIO_DIR = "portfolio"
 INDEX_FILE    = "index.html"
 VIDEOS_FILE   = "videos.txt"
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp')

@@ -292,9 +292,10 @@ function renderPortfolio(){
   const grid = document.getElementById('portfolioGrid');
   grid.innerHTML = portfolioImages.map((img,i) => {
     const ctr = portfolioCTR[img] || '';
+    const src = 'portfolio/' + encodeURIComponent(img);
     return `
     <div class="collage-item" onclick="openLightbox(${i})">
-      <img src="Portfolio Pieces/${img}" alt="Portfolio piece ${i+1}" loading="lazy">
+      <img src="${src}" alt="Portfolio piece ${i+1}" loading="lazy">
       ${ctr ? `<span class="ctr-badge">${ctr}</span>` : ''}
     </div>`;
   }).join('');
@@ -310,7 +311,7 @@ function showImage(index){
   if(index < 0) currentIndex = portfolioImages.length - 1;
   else if(index >= portfolioImages.length) currentIndex = 0;
   else currentIndex = index;
-  lightboxImg.src = `Portfolio Pieces/${portfolioImages[currentIndex]}`;
+  lightboxImg.src = `portfolio/${encodeURIComponent(portfolioImages[currentIndex])}`;
 }
 function openLightbox(index){
   lightbox.classList.add('active');
