@@ -332,7 +332,22 @@ document.addEventListener('keydown', e => {
 // ═══════════════════════════════════════════════
 // 2. VIDEOS — managed by sync_portfolio.py
 // ═══════════════════════════════════════════════
-const videoData = []; // VIDEOS_SYNC
+const videoData = [
+  {
+    "title": "I Built A PERFECT SOLO ICEBERG Fortress On Wipe - Rust",
+    "creator": "3ez",
+    "url": "https://www.youtube.com/watch?v=9kUc9Vfui90&t",
+    "duration": "",
+    "views": ""
+  },
+  {
+    "title": "This Clan Was Flexing 50 Rockets...",
+    "creator": "BBraden",
+    "url": "https://www.youtube.com/watch?v=9uv6RFiMnwo&t",
+    "duration": "",
+    "views": ""
+  }
+]; // VIDEOS_SYNC
 
 function renderVideos(){
   const grid = document.getElementById('videosGrid');
