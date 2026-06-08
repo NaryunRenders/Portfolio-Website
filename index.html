@@ -291,25 +291,12 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
 // 1. PORTFOLIO — managed by sync_portfolio.py
 // ═══════════════════════════════════════════════
 const portfolioImages = ['AKAI.jpg', 'After.jpg', 'AirfieldRender.png', 'CaveRenderv4.png', 'LEV3.png', 'RainV3.jpg', 'RustRender.png', 'SWGraveV1.jpg', 'SnowBaseRender.jpg', 'swqueenv2.png']; // SYNC_START
+const portfolioCTR = {}; // CTR_SYNC
 
-async function renderPortfolio(){
+function renderPortfolio(){
   const grid = document.getElementById('portfolioGrid');
-  // Try to load CTR data from thumbnails.json, fall back to empty if not found
-  let ctrMap = {};
-  try {
-    const res = await fetch('thumbnails.json');
-    if(res.ok){
-      const data = await res.json();
-      data.forEach(t => {
-        // Match by filename — strip any path prefix from image field
-        const key = t.image.split('/').pop();
-        ctrMap[key] = t.ctr || '';
-      });
-    }
-  } catch(e) {}
-
   grid.innerHTML = portfolioImages.map((img,i) => {
-    const ctr = ctrMap[img] || '';
+    const ctr = portfolioCTR[img] || '';
     return `
     <div class="collage-item" onclick="openLightbox(${i})">
       <img src="Portfolio Pieces/${img}" alt="Portfolio piece ${i+1}" loading="lazy">
@@ -350,41 +337,38 @@ document.addEventListener('keydown', e => {
 });
 
 // ═══════════════════════════════════════════════
-// 2. VIDEOS from videos.json
+// 2. VIDEOS — managed by sync_portfolio.py
 // ═══════════════════════════════════════════════
-async function loadVideos(){
+const videoData = []; // VIDEOS_SYNC
+
+function renderVideos(){
   const grid = document.getElementById('videosGrid');
-  try{
-    const res = await fetch('videos.json');
-    if(!res.ok) throw new Error();
-    const data = await res.json();
-    if(!data.length){ grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim)">No videos yet.</div>'; return; }
-    grid.innerHTML = data.map(v => {
-      const match = v.url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
-      const vid = match ? match[1] : null;
-      const thumb = vid ? `https://img.youtube.com/vi/${vid}/maxresdefault.jpg` : '';
-      return `<div class="yt-card">
-        <div class="yt-thumb-wrap" onclick="embedVideo(this,'${vid}')">
-          ${thumb ? `<img src="${thumb}" alt="${v.title}" loading="lazy">` : '<div style="width:100%;height:100%;background:var(--bg3)"></div>'}
-          <div class="yt-play-btn"><div class="yt-play-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,4 20,12 6,20"/></svg></div></div>
-          ${v.duration ? `<span class="yt-duration">${v.duration}</span>` : ''}
-        </div>
-        <div class="yt-info">
-          <div class="yt-title">${v.title}</div>
-          <div class="yt-meta">
-            <span class="yt-creator">${v.creator}</span>
-            ${v.duration ? `<span class="yt-dot"></span><span>${v.duration}</span>` : ''}
-            ${v.views ? `<span class="yt-dot"></span><span>${v.views} views</span>` : ''}
-          </div>
-        </div>
-      </div>`;
-    }).join('');
-  } catch(e){
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:14px">Add videos via <code style="background:var(--bg3);padding:2px 6px;border-radius:4px">videos.json</code></div>';
+  if(!videoData.length){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:14px">Add YouTube URLs to <code style="background:var(--bg3);padding:2px 6px;border-radius:4px">videos.txt</code> and push.</div>';
+    return;
   }
+  grid.innerHTML = videoData.map(v => {
+    const match = v.url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+    const vid   = match ? match[1] : null;
+    const thumb = vid ? `https://img.youtube.com/vi/${vid}/maxresdefault.jpg` : '';
+    return `<div class="yt-card">
+      <div class="yt-thumb-wrap" onclick="embedVideo(this,'${vid}')">
+        ${thumb ? `<img src="${thumb}" alt="${v.title}" loading="lazy">` : '<div style="width:100%;height:100%;background:var(--bg3)"></div>'}
+        <div class="yt-play-btn"><div class="yt-play-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><polygon points="6,4 20,12 6,20"/></svg></div></div>
+        ${v.duration ? `<span class="yt-duration">${v.duration}</span>` : ''}
+      </div>
+      <div class="yt-info">
+        <div class="yt-title">${v.title}</div>
+        <div class="yt-meta">
+          <span class="yt-creator">${v.creator}</span>
+          ${v.duration ? `<span class="yt-dot"></span><span>${v.duration}</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 function embedVideo(wrap,vid){ if(!vid) return; wrap.innerHTML = `<div class="yt-iframe-wrap"><iframe src="https://www.youtube.com/embed/${vid}?autoplay=1&rel=0" allow="autoplay;encrypted-media" allowfullscreen></iframe></div>`; }
-loadVideos();
+renderVideos();
 
 // ═══════════════════════════════════════════════
 // 3. COUNTING STATS
