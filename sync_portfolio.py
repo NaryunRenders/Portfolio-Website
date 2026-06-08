@@ -55,11 +55,15 @@ def sync_portfolio(content):
 # VIDEO SYNC
 # ─────────────────────────────────────────────
 def extract_video_id(url):
+    url = re.sub(r'[&?]t=?\d*$', '', url).strip()
     match = re.search(r'(?:youtu\.be/|youtube\.com/(?:watch\?v=|shorts/|embed/))([A-Za-z0-9_-]{11})', url)
     return match.group(1) if match else None
 
+def clean_url(url):
+    vid = extract_video_id(url)
+    return f"https://www.youtube.com/watch?v={vid}" if vid else url
+
 def fetch_video_meta(url):
-    """Use YouTube oEmbed (no API key needed) to get title + author."""
     encoded = urllib.parse.quote(url, safe='')
     oembed_url = f"https://www.youtube.com/oembed?url={encoded}&format=json"
     try:
@@ -71,13 +75,9 @@ def fetch_video_meta(url):
             }
     except Exception as e:
         print(f"  Warning: could not fetch metadata for {url} — {e}")
-        return {'title': 'Untitled', 'creator': ''}
+        return None
 
 def fetch_duration(video_id):
-    """
-    Fetch duration from YouTube's no-auth page scrape.
-    Falls back to '' if unavailable.
-    """
     try:
         req = urllib.request.Request(
             f"https://www.youtube.com/watch?v={video_id}",
@@ -85,7 +85,6 @@ def fetch_duration(video_id):
         )
         with urllib.request.urlopen(req, timeout=10) as r:
             html = r.read().decode('utf-8', errors='ignore')
-        # Duration appears as "lengthSeconds":"NNN" in the page data
         match = re.search(r'"lengthSeconds":"(\d+)"', html)
         if match:
             secs = int(match.group(1))
@@ -106,19 +105,43 @@ def sync_videos(content):
     with open(VIDEOS_FILE, 'r', encoding='utf-8') as f:
         urls = [line.strip() for line in f if line.strip() and not line.startswith('#')]
 
-    print(f"Found {len(urls)} video URLs, fetching metadata...")
+    if not urls:
+        print("No video URLs found.")
+        return content
 
+    # Load existing video data so we can preserve already-fetched entries
+    existing = {}
+    match = re.search(r'const videoData = (\[.*?\]); // VIDEOS_SYNC', content, re.DOTALL)
+    if match:
+        try:
+            for v in json.loads(match.group(1)):
+                vid = extract_video_id(v.get('url', ''))
+                if vid:
+                    existing[vid] = v
+        except Exception:
+            pass
+
+    print(f"Found {len(urls)} video URLs...")
     videos = []
     for url in urls:
         vid = extract_video_id(url)
         if not vid:
             print(f"  Skipping unrecognised URL: {url}")
             continue
-        print(f"  Fetching: {url}")
-        meta = fetch_video_meta(url)
-        meta['url']      = url
+
+        # Reuse cached data if already fetched successfully
+        if vid in existing and existing[vid].get('title', 'Untitled') != 'Untitled':
+            print(f"  Cached: {existing[vid]['title']}")
+            videos.append(existing[vid])
+            continue
+
+        print(f"  Fetching: {clean_url(url)}")
+        meta = fetch_video_meta(clean_url(url))
+        if meta is None:
+            # Fetch failed — keep placeholder so video still appears on site
+            meta = {'title': 'Untitled', 'creator': ''}
+        meta['url']      = clean_url(url)
         meta['duration'] = fetch_duration(vid)
-        meta['views']    = ''   # not available without API key
         videos.append(meta)
         print(f"    → {meta['title']} by {meta['creator']} ({meta['duration']})")
 
@@ -126,7 +149,6 @@ def sync_videos(content):
     if re.search(r"const videoData = \[.*?\]; // VIDEOS_SYNC", content, re.DOTALL):
         content = re.sub(r"const videoData = \[.*?\]; // VIDEOS_SYNC", new_videos, content, flags=re.DOTALL)
     else:
-        # Insert after CTR_SYNC line
         content = re.sub(
             r"(const portfolioCTR = \{.*?\}; // CTR_SYNC)",
             r"\1\n" + new_videos,
