@@ -55,9 +55,15 @@ hr{border:none;border-top:1px solid var(--border)}
 /* PORTFOLIO GRID (sync_portfolio.py writes to portfolioImages) */
 .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .collage-item{position:relative;overflow:hidden;border-radius:10px;cursor:pointer;aspect-ratio:16/9;border:2px solid transparent;transition:border-color .2s,transform .2s,box-shadow .2s}
-.collage-item:hover{border-color:var(--red);transform:scale(1.02);box-shadow:0 8px 24px rgba(255,0,0,0.15);z-index:2}
+.collage-item:hover{border-color:var(--red);transform:scale(1.02);box-shadow:0 8px 24px rgba(255,0,0,0.2);z-index:2}
 .collage-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
 .collage-item:hover img{transform:scale(1.08)}
+.ctr-badge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.75);color:#4ade80;font-size:11px;font-weight:700;padding:3px 7px;border-radius:4px;border:1px solid rgba(74,222,128,.25);z-index:1}
+.collage-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);opacity:0;transition:opacity .25s ease;display:flex;align-items:center;justify-content:center}
+.collage-item:hover .collage-overlay{opacity:1}
+.collage-overlay-play{width:52px;height:52px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;transform:scale(0.8);transition:transform .25s ease;margin-bottom:12px}
+.collage-item:hover .collage-overlay-play{transform:scale(1)}
+.collage-overlay-play svg{width:20px;height:20px;fill:white;margin-left:3px}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;z-index:2000;inset:0;background:rgba(0,0,0,0.92);justify-content:center;align-items:center;opacity:0;transition:opacity .3s}
@@ -109,28 +115,11 @@ hr{border:none;border-top:1px solid var(--border)}
 .svc-bullets li{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
 .svc-bullets li::before{content:'';width:4px;height:4px;background:var(--red);border-radius:50%;flex-shrink:0}
 
-/* PROCESS */
-.process-grid{display:flex;flex-direction:column;align-items:center;gap:4px;max-width:680px;margin:0 auto}
-.process-step{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;text-align:center}
-.process-pill{background:var(--red);color:#fff;padding:8px 28px;border-radius:100px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;display:inline-block}
-.process-desc{color:var(--muted);font-size:14px;line-height:1.6;max-width:500px}
-.process-arrow{color:var(--dim);font-size:22px;margin:4px 0;line-height:1}
-
-/* ABOUT SKILLS */
-.skills-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:32px}
-.skill-bubble{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text);font-size:13px;font-weight:600;padding:8px 18px;border-radius:100px;text-transform:uppercase;letter-spacing:.06em;transition:border-color .15s}
-.skill-bubble:hover{border-color:var(--red)}
-.skill-bubble img{height:18px;width:auto;object-fit:contain}
-
-/* LOGOS/CLIENTS CAROUSEL */
+/* LOGOS/CLIENTS */
 .logos-section{padding:60px 40px;max-width:1200px;margin:0 auto;text-align:center}
 .logos-lbl{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:32px}
-.carousel-outer{overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent);mask-image:linear-gradient(to right,transparent,black 10%,black 90%,transparent)}
-.carousel-track{display:flex;gap:48px;animation:marquee 30s linear infinite;width:max-content;align-items:center}
-.carousel-track:hover{animation-play-state:paused}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.client-logo-img{height:64px;width:auto;object-fit:contain;opacity:0.5;filter:grayscale(1);transition:opacity .2s,filter .2s}
-.client-logo-img:hover{opacity:1;filter:grayscale(0)}
+.logos-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.logo-name{font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 
 /* CTA */
 .cta-block{padding:40px;max-width:1200px;margin:0 auto 80px}
@@ -172,7 +161,6 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
     <li><a href="#thumbnails">Thumbnails</a></li>
     <li><a href="#videos">Videos</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#process">Process</a></li>
     <li><a href="https://discordapp.com/users/804899012356341772" class="nav-cta">Start a project</a></li>
   </ul>
 </nav>
@@ -237,7 +225,7 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
   <div class="stats-inner">
     <div class="stat-cell"><div class="stat-num" data-target="10" data-suffix="M+">0</div><div class="stat-lbl">Total Views</div></div>
     <div class="stat-cell"><div class="stat-num" data-target="20" data-suffix="+">0</div><div class="stat-lbl">Creators</div></div>
-    <div class="stat-cell"><div class="stat-num" data-target="17" data-suffix="%">0</div><div class="stat-lbl">Avg CTR Lift</div></div>
+    <div class="stat-cell"><div class="stat-num" data-target="17" data-suffix="%">0</div><div class="stat-lbl">Avg CTR</div></div>
     <div class="stat-cell"><div class="stat-num" data-target="72" data-suffix="h">0</div><div class="stat-lbl">Turnaround</div></div>
   </div>
 </div>
@@ -266,63 +254,16 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
   </div>
 </section>
 
-<!-- PROCESS -->
-<section id="process">
-  <div class="sec-label">Process</div>
-  <div class="sec-header"><h2>How I bring your vision to life.</h2></div>
-  <div class="process-grid">
-    <div class="process-step">
-      <div class="process-pill">Brief</div>
-      <p class="process-desc">You share your initial brief with me, through text or even a simple drawing.</p>
-    </div>
-    <div class="process-arrow">↓</div>
-    <div class="process-step">
-      <div class="process-pill">Concept</div>
-      <p class="process-desc">I create an initial concept in 3D space and get your approval before moving on.</p>
-    </div>
-    <div class="process-arrow">↓</div>
-    <div class="process-step">
-      <div class="process-pill">Deliver</div>
-      <p class="process-desc">I render the scene and apply final touches in Photoshop — text, UI elements, colour correction.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT / SKILLS -->
-<section id="about">
-  <div class="sec-label">About</div>
-  <div class="sec-header">
-    <h2>3D Thumbnail Specialist</h2>
-    <div class="sec-header-r">Deep knowledge of CTR, environments, lighting and posing. I craft thumbnails that capture the intensity of your content.</div>
-  </div>
-  <div class="skills-row">
-    <span class="skill-bubble"><img src="WebsiteLogos/Blender.png" alt="Blender"> Blender</span>
-    <span class="skill-bubble"><img src="WebsiteLogos/Photoshop.png" alt="Photoshop"> Photoshop</span>
-    <span class="skill-bubble"><img src="WebsiteLogos/Rust.png" alt="Rust"> Rust</span>
-    <span class="skill-bubble"><img src="WebsiteLogos/ArcRaiders.png" alt="Arc Raiders"> Arc Raiders</span>
-  </div>
-</section>
-
-<!-- CLIENT LOGOS CAROUSEL -->
+<!-- CLIENT LOGOS -->
 <div class="logos-section">
   <div class="logos-lbl">Trusted by channels with 10M+ combined views</div>
-  <div class="carousel-outer">
-    <div class="carousel-track" id="carouselTrack">
-      <!-- duplicated for seamless loop -->
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Bbraden</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Schoolwe</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">3ez</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Bati</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Qqumber</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Kickz</span>
-      <!-- duplicate set for seamless loop -->
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Bbraden</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Schoolwe</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">3ez</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Bati</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Qqumber</span>
-      <span style="font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)">Kickz</span>
-    </div>
+  <div class="logos-row">
+    <span class="logo-name">Bbraden</span>
+    <span class="logo-name">Schoolwe</span>
+    <span class="logo-name">3ez</span>
+    <span class="logo-name">Bati</span>
+    <span class="logo-name">Qqumber</span>
+    <span class="logo-name">Kickz</span>
   </div>
 </div>
 
@@ -351,12 +292,33 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
 // ═══════════════════════════════════════════════
 const portfolioImages = ['AKAI.jpg', 'After.jpg', 'AirfieldRender.png', 'CaveRenderv4.png', 'LEV3.png', 'RainV3.jpg', 'RustRender.png', 'SWGraveV1.jpg', 'SnowBaseRender.jpg', 'swqueenv2.png']; // SYNC_START
 
-function renderPortfolio(){
+async function renderPortfolio(){
   const grid = document.getElementById('portfolioGrid');
-  grid.innerHTML = portfolioImages.map((img,i) => `
+  // Try to load CTR data from thumbnails.json, fall back to empty if not found
+  let ctrMap = {};
+  try {
+    const res = await fetch('thumbnails.json');
+    if(res.ok){
+      const data = await res.json();
+      data.forEach(t => {
+        // Match by filename — strip any path prefix from image field
+        const key = t.image.split('/').pop();
+        ctrMap[key] = t.ctr || '';
+      });
+    }
+  } catch(e) {}
+
+  grid.innerHTML = portfolioImages.map((img,i) => {
+    const ctr = ctrMap[img] || '';
+    return `
     <div class="collage-item" onclick="openLightbox(${i})">
       <img src="Portfolio Pieces/${img}" alt="Portfolio piece ${i+1}" loading="lazy">
-    </div>`).join('');
+      ${ctr ? `<span class="ctr-badge">${ctr}</span>` : ''}
+      <div class="collage-overlay">
+        <div class="collage-overlay-play"><svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"/></svg></div>
+      </div>
+    </div>`;
+  }).join('');
 }
 renderPortfolio();
 
