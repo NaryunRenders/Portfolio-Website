@@ -25,20 +25,20 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.93);backdrop-fi
 .nav-cta{background:var(--red)!important;color:#fff!important;border-radius:100px!important;padding:8px 18px!important;font-weight:600!important}
 
 /* HERO */
-.hero{max-width:1200px;margin:0 auto;padding:100px 40px 80px}
-.eyebrow{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
+.hero{max-width:1200px;margin:0 auto;padding:100px 40px 80px;text-align:center}
+.eyebrow{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
 .eyebrow-dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero-headline{font-size:clamp(52px,6vw,86px);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:28px;display:block}
+.hero-headline{font-size:clamp(52px,6vw,86px);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:28px;display:block;text-align:center}
 .hero-line{display:block;overflow:hidden;height:1.08em}
 .hero-line-inner{display:inline-block;transform:translateY(100%);opacity:0}
 .hero-line.white .hero-line-inner{color:#fff}
 .hero-line.red .hero-line-inner{color:var(--red)}
 .click-cursor{position:absolute;width:48px;height:48px;pointer-events:none;opacity:0;z-index:10;transform:translate(-50%,-50%)}
 .click-cursor svg{width:48px;height:48px;filter:drop-shadow(0 2px 10px rgba(0,0,0,0.9))}
-.hero-headline-wrap{position:relative;display:inline-block}
-.sub{color:var(--muted);font-size:17px;max-width:480px;line-height:1.6;margin-bottom:40px}
-.btns{display:flex;gap:12px;flex-wrap:wrap}
+.hero-headline-wrap{position:relative;display:block}
+.sub{color:var(--muted);font-size:17px;max-width:480px;line-height:1.6;margin:0 auto 40px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .btn-p{background:var(--red);color:#fff;font-weight:700;font-size:15px;padding:14px 28px;border-radius:100px;transition:opacity .15s;display:inline-block}
 .btn-p:hover{opacity:.85}
 .btn-s{background:#1a1a1a;color:var(--text);font-weight:600;font-size:15px;padding:14px 28px;border-radius:100px;border:1px solid var(--border);display:inline-block;transition:background .15s}
@@ -157,7 +157,7 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
     <li><a href="#thumbnails">Thumbnails</a></li>
     <li><a href="#videos">Videos</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="https://discordapp.com/users/804899012356341772" class="nav-cta">Start a project</a></li>
+    <li><a href="https://discordapp.com/users/804899012356341772" target="_blank" rel="noopener noreferrer" class="nav-cta">Start a project</a></li>
   </ul>
 </nav>
 
@@ -177,7 +177,7 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
   </div>
   <p class="sub">I'm Naryun — a 3D thumbnail designer and video editor working with creators in the Rust scene for 2+ years.</p>
   <div class="btns">
-    <a href="https://discordapp.com/users/804899012356341772" class="btn-p">Start a project</a>
+    <a href="https://discordapp.com/users/804899012356341772" target="_blank" rel="noopener noreferrer" class="btn-p">Start a project</a>
     <a href="#thumbnails" class="btn-s">See recent work</a>
   </div>
 </div>
@@ -272,8 +272,8 @@ footer{text-align:center;padding:32px;border-top:1px solid var(--border);color:v
     <h2>Let's make your next video unmissable.</h2>
     <p>Contact me on Discord, Twitter, or Email</p>
     <div class="cta-links">
-      <a href="https://discordapp.com/users/804899012356341772" class="cta-btn">Discord</a>
-      <a href="https://twitter.com/naryunrust" class="cta-btn">Twitter</a>
+      <a href="https://discordapp.com/users/804899012356341772" target="_blank" rel="noopener noreferrer" class="cta-btn">Discord</a>
+      <a href="https://twitter.com/naryunrust" target="_blank" rel="noopener noreferrer" class="cta-btn">Twitter</a>
       <a href="mailto:oscargashdown@gmail.com" class="cta-btn">Email</a>
     </div>
   </div>
@@ -411,11 +411,12 @@ statsObs.observe(document.querySelector('.stats-strip'));
 
   function getClickWordPos(){
     const word = document.getElementById('wordClick');
+    const wrap = document.getElementById('heroHeadline').closest('.hero-headline-wrap');
     const wordRect = word.getBoundingClientRect();
-    const heroRect = document.getElementById('heroHeadline').getBoundingClientRect();
+    const wrapRect = wrap.getBoundingClientRect();
     return {
-      x: wordRect.left - heroRect.left + wordRect.width  * 0.5,
-      y: wordRect.top  - heroRect.top  + wordRect.height * 0.5
+      x: wordRect.left - wrapRect.left + wordRect.width  * 0.5,
+      y: wordRect.top  - wrapRect.top  + wordRect.height * 0.5
     };
   }
 
